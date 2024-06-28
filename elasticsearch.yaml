@@ -40,4 +40,3 @@ spec:
     - protocol: TCP
       port: 9300
       targetPort: 9300
-  #This example uses Elasticsearch version 7.15.2. Adjust the image version and resources according to your requirements.
