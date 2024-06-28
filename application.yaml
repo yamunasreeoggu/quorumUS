@@ -20,7 +20,7 @@ spec:
           env:
             - name: RAILS_ENV
               value: production
-          # Add other environment variables as needed
+
 ---
 apiVersion: v1
 kind: Service
