@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: rails-app
-          image: your-docker-image-for-rails-app:latest
+          image: #your-docker-image-for-rails-app:latest
           ports:
             - containerPort: 3000
           env:
@@ -33,5 +33,4 @@ spec:
     - protocol: TCP
       port: 3000
       targetPort: 3000
-  type: NodePort  # Use NodePort for simplicity; adjust for production setup
-  #Replace your-docker-image-for-rails-app with your actual Docker image name for the Rails application.
+  type: NodePort
