@@ -17,11 +17,11 @@ spec:
           image: postgres:latest
           env:
             - name: POSTGRES_DB
-              value: your_production_database_name
+              value: postgres
             - name: POSTGRES_USER
-              value: your_username
+              value: root
             - name: POSTGRES_PASSWORD
-              value: your_password
+              value: quorumUS@321
           ports:
             - containerPort: 5432
 ---
@@ -36,4 +36,3 @@ spec:
     - protocol: TCP
       port: 5432
       targetPort: 5432
-  #Replace your_production_database_name, your_username, and your_password with your actual PostgreSQL database configuration.
