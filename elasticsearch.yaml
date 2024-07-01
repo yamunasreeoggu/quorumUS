@@ -24,7 +24,6 @@ spec:
               cpu: "1"
           ports:
             - containerPort: 9200
-            - containerPort: 9300
           env:
             - name: ELASTICSEARCH_URL
               value: http://elasticsearch:9200
