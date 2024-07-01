@@ -6,6 +6,7 @@ WORKDIR   /app
 RUN       gem install bundler -v 2.4.22
 COPY      Gemfile Gemfile.lock ./
 RUN       bundle config set without 'development test'
+RUN       bundle update mimemagic || bundle update --bundler
 RUN       bundle install
 COPY      . .
 RUN       ./bin/setup
