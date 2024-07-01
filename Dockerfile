@@ -1,39 +1,13 @@
-# Use the official Ruby image
-FROM ruby:2.6.0
-
-# Set environment variables
-ENV RAILS_ENV=production \
-    RAILS_ROOT=/app
-
-# Set working directory
-WORKDIR $RAILS_ROOT
-
-# Install dependencies
+FROM      ruby:2.6.0
 RUN       gem install rubygems-update -v 3.2.3
 RUN       update_rubygems
-
-# Install bundler
-RUN gem install bundler
-
-# Copy Gemfile and Gemfile.lock
-COPY Gemfile Gemfile.lock ./
-
-# Bundle install with retries
-RUN bundle config --global frozen 1 && \
-    bundle config --global retry 5 && \
-    bundle install --without development test --jobs=$(nproc) --retry=5
-
-# Copy application code
-COPY . .
-
-# Handle mimemagic version issue
-RUN bundle update mimemagic || bundle update --bundler
-
-# Precompile assets and clean up
-RUN bundle exec rails assets:precompile && \
-    bundle exec rails tmp:clear && \
-    bundle exec rails log:clear && \
-    rm -rf node_modules tmp/cache app/assets/spec
-
-# Start the application
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+ENV       RAILS_ENV=production
+WORKDIR   /app
+RUN       gem install bundler -v 2.4.22
+COPY      Gemfile Gemfile.lock ./
+RUN       bundle config set without 'development test'
+RUN       bundle install
+COPY      . .
+RUN       ./bin/setup
+EXPOSE    3000
+CMD       ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
