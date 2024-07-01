@@ -20,6 +20,24 @@ spec:
           env:
             - name: RAILS_ENV
               value: production
+            - name: POSTGRES_DB
+              value: postgres
+            - name: PG_HOST
+              value: localhost
+            - name: POSTGRES_USER
+              value: root
+            - name: POSTGRES_PASSWORD
+              value: quorumUS@321
+            - name: ELASTICSEARCH_URL
+              value: http://elasticsearch:9200
+            - name: RABBITMQ_URL
+              value: amqp://guest:guest@rabbitmq:5672
+            - name: RABBITMQ_EXCHANGE
+              value: my_exchange
+            - name: RABBITMQ_QUEUE
+              value: my_queue
+            - name: REDIS_URL
+              value: redis://redis:6379/0
 
 ---
 apiVersion: v1
