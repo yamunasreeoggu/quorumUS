@@ -6,8 +6,8 @@ RUN sed -i 's/#baseurl/baseurl/g' /etc/yum.repos.d/CentOS-Base.repo
 RUN sed -i 's/mirror.centos.org/your-mirror-url/g' /etc/yum.repos.d/CentOS-Base.repo
 
 # Update packages and install necessary tools
-RUN yum update -y
-RUN yum install -y gcc-c++ make libpq-devel nodejs
+#RUN yum update -y
+#RUN yum install -y gcc-c++ make libpq-devel nodejs
 
 # Install Rubygems update and update Rubygems
 RUN gem install rubygems-update -v 3.2.3
