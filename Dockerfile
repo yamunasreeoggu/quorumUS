@@ -1,17 +1,38 @@
-FROM      ruby:2.6.0
-RUN       dnf update -qq && \
-          dnf install -y build-essential libpq-dev nodejs
-RUN       gem install rubygems-update -v 3.2.3
-RUN       update_rubygems
-WORKDIR   /app
-RUN       gem install bundler -v 2.4.22
-COPY      Gemfile Gemfile.lock ./
-RUN       bundle config set without 'development test'
-RUN       bundle update mimemagic || bundle update --bundler
-RUN       bundle install
-COPY      . .
-RUN       sed -i '/mimemagic/d' Gemfile.lock
-RUN       bundle install
-RUN       ./bin/setup
-EXPOSE    3000
-CMD       ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+FROM centos/ruby-26-centos7
+
+# Update packages and install necessary tools
+RUN yum update -y && \
+    yum install -y gcc-c++ make libpq-devel nodejs
+
+# Install Rubygems update and update Rubygems
+RUN gem install rubygems-update -v 3.2.3 && \
+    update_rubygems
+
+WORKDIR /app
+
+# Install Bundler
+RUN gem install bundler -v 2.4.22
+
+# Copy Gemfile and Gemfile.lock
+COPY Gemfile Gemfile.lock ./
+
+# Configure Bundler and install dependencies
+RUN bundle config set without 'development test' && \
+    bundle update mimemagic || bundle update --bundler && \
+    bundle install
+
+# Copy the rest of the application code
+COPY . .
+
+# Remove mimemagic entry from Gemfile.lock
+RUN sed -i '/mimemagic/d' Gemfile.lock && \
+    bundle install
+
+# Setup the application
+RUN ./bin/setup
+
+# Expose port 3000
+EXPOSE 3000
+
+# Command to start the Rails server
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
