@@ -1,4 +1,6 @@
 FROM      ruby:2.6.0
+RUN       yum update -qq && \
+          yum install -y build-essential libpq-dev nodejs
 RUN       gem install rubygems-update -v 3.2.3
 RUN       update_rubygems
 WORKDIR   /app
