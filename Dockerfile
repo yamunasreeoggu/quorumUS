@@ -1,4 +1,5 @@
 FROM centos/ruby-26-centos7
+USER root
 
 # Update packages and install necessary tools
 RUN yum update -y && \
