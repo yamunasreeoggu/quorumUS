@@ -1,6 +1,10 @@
 FROM centos/ruby-26-centos7
 USER root
 
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Base.repo && \
+    sed -i 's/#baseurl/baseurl/g' /etc/yum.repos.d/CentOS-Base.repo && \
+    sed -i 's/mirror.centos.org/your-mirror-url/g' /etc/yum.repos.d/CentOS-Base.repo
+
 # Update packages and install necessary tools
 RUN yum update -y && \
     yum install -y gcc-c++ make libpq-devel nodejs
