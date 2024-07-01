@@ -1,43 +1,39 @@
-FROM centos/ruby-26-centos7
-USER root
+FROM ruby:2.6.0
 
-RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-Base.repo
-RUN sed -i 's/#baseurl/baseurl/g' /etc/yum.repos.d/CentOS-Base.repo
-RUN sed -i 's/mirror.centos.org/your-mirror-url/g' /etc/yum.repos.d/CentOS-Base.repo
+# Update system dependencies and install necessary packages
+RUN apt-get update -qq && \
+    apt-get install -y build-essential libpq-dev nodejs
 
-# Update packages and install necessary tools
-#RUN yum update -y
-#RUN yum install -y gcc-c++ make libpq-devel nodejs
+# Install specific version of rubygems-update
+RUN gem install rubygems-update -v 3.2.3 && \
+    update_rubygems
 
-# Install Rubygems update and update Rubygems
-RUN gem install rubygems-update -v 3.2.3
-RUN update_rubygems
-
+# Set the working directory
 WORKDIR /app
 
-# Install Bundler
+# Install bundler
 RUN gem install bundler -v 2.4.22
 
 # Copy Gemfile and Gemfile.lock
 COPY Gemfile Gemfile.lock ./
 
 # Configure Bundler and install dependencies
-RUN bundle config set without 'development test'
-RUN bundle update mimemagic || bundle update --bundler
-RUN bundle install
+RUN bundle config set without 'development test' && \
+    bundle update --bundler && \
+    bundle install
 
-# Copy the rest of the application code
+# Copy application code
 COPY . .
 
-# Remove mimemagic entry from Gemfile.lock
-RUN sed -i '/mimemagic/d' Gemfile.lock
-RUN bundle install
+# Remove mimemagic from Gemfile.lock
+RUN sed -i '/mimemagic/d' Gemfile.lock && \
+    bundle install
 
-# Setup the application
+# Run setup script or necessary commands
 RUN ./bin/setup
 
-# Expose port 3000
+# Expose port
 EXPOSE 3000
 
-# Command to start the Rails server
+# Define command to run the application
 CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
