@@ -9,11 +9,8 @@ ENV RAILS_ENV=production \
 WORKDIR $RAILS_ROOT
 
 # Install dependencies
-RUN apt-get update -qq && apt-get install -y \
-    build-essential \
-    nodejs \
-    postgresql-client \
-    && rm -rf /var/lib/apt/lists/*
+RUN       gem install rubygems-update -v 3.2.3
+RUN       update_rubygems
 
 # Install bundler
 RUN gem install bundler
