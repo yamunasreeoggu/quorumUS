@@ -16,12 +16,14 @@ spec:
         - name: postgres
           image: postgres:latest
           env:
+            - name: PG_HOST
+              value: localhost
             - name: POSTGRES_DB
               value: postgres
             - name: POSTGRES_USER
               value: root
             - name: POSTGRES_PASSWORD
-              value: quorumUS@321
+              value: quorumUS321
           ports:
             - containerPort: 5432
 ---

@@ -27,11 +27,15 @@ spec:
             - name: POSTGRES_USER
               value: root
             - name: POSTGRES_PASSWORD
-              value: quorumUS@321
+              value: quorumUS321
             - name: ELASTICSEARCH_URL
               value: http://elasticsearch:9200
+            - name: RABBITMQ_USER
+              value: root
+            - name: RABBITMQ_PASS
+              value: quorumUS321
             - name: RABBITMQ_URL
-              value: amqp://guest:guest@rabbitmq:5672
+              value: amqp://root:quorumUS321@rabbitmq:5672
             - name: RABBITMQ_EXCHANGE
               value: my_exchange
             - name: RABBITMQ_QUEUE
