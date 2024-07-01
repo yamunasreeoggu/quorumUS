@@ -1,5 +1,6 @@
 FROM      ruby:2.6.0
-RUN       apt-get update && apt-get install -y
+RUN       apt-get update
+RUN       apt-get install -y
 #RUN       build-essential
 RUN       gem install rubygems-update -v 3.2.3
 RUN       update_rubygems
