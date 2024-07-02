@@ -7,7 +7,6 @@ gem 'rails', '~> 6.0.2', '>= 6.0.2.1'
 gem 'puma', '~> 4.1'
 gem 'pg', '~> 0.18.4'
 gem 'redis', '~> 4.0'
-gem 'mimemagic', '~> 0.4.0'
 gem 'sneakers'
 gem 'json'
 gem 'bootsnap', '>= 1.4.2', require: false
