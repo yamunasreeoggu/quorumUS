@@ -12,7 +12,7 @@ RUN       bundle update mimemagic || bundle update --bundler
 RUN       bundle install
 COPY      . .
 RUN       sed -i '/mimemagic/d' Gemfile.lock
-#RUN       bundle install
-RUN       ./bin/setup
+RUN       bundle install
+#RUN       ./bin/setup
 EXPOSE    3000
 CMD       ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
