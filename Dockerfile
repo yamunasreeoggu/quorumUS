@@ -4,12 +4,13 @@ RUN       update_rubygems
 WORKDIR   /app
 RUN       gem install bundler -v 2.4.22
 COPY      Gemfile Gemfile.lock ./
-RUN       bundle config set without 'development test'
-RUN       bundle update mimemagic || bundle update --bundler
-RUN       bundle install
+RUN       bundle install --jobs "$(nproc)" --retry 5
+#RUN       bundle config set without 'development test'
+#RUN       bundle update mimemagic || bundle update --bundler
+#RUN       bundle install
 COPY      . .
-RUN       sed -i '/mimemagic/d' Gemfile.lock
-RUN       bundle install
+#RUN       sed -i '/mimemagic/d' Gemfile.lock
+#RUN       bundle install
 RUN       ./bin/setup
 EXPOSE    3000
 CMD       ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
